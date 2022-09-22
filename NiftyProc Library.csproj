@@ -4,7 +4,7 @@
     <RootNamespace>NiftyProcLibrary</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="scripts" />
+    <Folder Include="demo" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="addons\niftyproc\DelaunatorSharp\Interfaces\IPoint.cs" />

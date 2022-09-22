@@ -11,6 +11,7 @@ namespace NiftyProcLibrary.Debug
     {
         private DebugPoissonDiscSampler _poissonDisc;
         private Delaunator _delaunator;
+        private bool _isDirty;
 
         private Vector2[] _points;
 
@@ -24,7 +25,6 @@ namespace NiftyProcLibrary.Debug
                 {
                     _points = _poissonDisc.Points.ToArray();
                 }
-
                 _poissonDisc.OnChange += HandlePoissonDiscChange;
             }
 
@@ -33,7 +33,9 @@ namespace NiftyProcLibrary.Debug
 
         private void HandlePoissonDiscChange(List<Vector2> points)
         {
+            GD.Print("HandlePoissonDiscChange");
             _points = points.ToArray();
+            Regenerate();
         }
 
         private void Regenerate()
@@ -41,6 +43,7 @@ namespace NiftyProcLibrary.Debug
             if (_points != null && _points.Length > 3)
             {
                 _delaunator = new Delaunator(_points);
+                _isDirty = true;
             }
         }
 
@@ -55,7 +58,7 @@ namespace NiftyProcLibrary.Debug
                 _delaunator.ForEachVoronoiEdge(edge => { DrawLine(edge.P, edge.Q, Colors.Black); });
                 _delaunator.ForEachVoronoiCell(cell =>
                 {
-                    if (cell.Points.Length > 2)
+                    if (cell.Points.Length > 2 && Geometry.TriangulatePolygon(cell.Points).Length > 0)
                     {
                         color.h = (float)rnd.NextDouble();
                         color.s = 0.4f;
@@ -67,6 +70,16 @@ namespace NiftyProcLibrary.Debug
             }
 
             base._Draw();
+        }
+
+        public override void _Process(float delta)
+        {
+            if (_isDirty)
+            {
+                Update();
+                _isDirty = false;
+            }
+            base._Process(delta);
         }
     }
 }
