@@ -27,7 +27,6 @@ namespace NiftyProcLibrary.Debug
                 }
                 _poissonDisc.OnChange += HandlePoissonDiscChange;
             }
-
             Regenerate();
         }
 
@@ -68,7 +67,6 @@ namespace NiftyProcLibrary.Debug
                     }
                 });
             }
-
             base._Draw();
         }
 
