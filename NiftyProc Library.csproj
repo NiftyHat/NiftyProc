@@ -1,0 +1,13 @@
+<Project Sdk="Godot.NET.Sdk/3.3.0">
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <RootNamespace>NiftyProcLibrary</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="scripts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="addons\niftyproc\DelaunatorSharp\Interfaces\IPoint.cs" />
+    <Compile Remove="addons\niftyproc\DelaunatorSharp\Models\Point.cs" />
+  </ItemGroup>
+</Project>
